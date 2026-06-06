@@ -5,10 +5,10 @@ info:
 
 http:
   method: POST
-  url: "{{baseUrl}}/document/create"
+  url: '{{baseUrl}}/document/create'
   auth:
     type: bearer
-    token: "{{token}}"
+    token: '{{token}}'
 
 runtime:
   scripts:
@@ -19,12 +19,31 @@ runtime:
           data: {
             name: "Test_" + Date.now(),
             description: "temp",
-            responsibleRoleId: bru.getEnvVar("locationID"),
-            locationId: bru.getEnvVar("responsibleRoleID")
+            responsibleRoleId: bru.getEnvVar("responsibleRoleID"),
+            locationId: bru.getEnvVar("locationID")
           },
           mode: "standard",
           force: false
         });
+  assertions:
+    - expression: res.body.state
+      operator: eq
+      value: '"active"'
+    - expression: res.body.description
+      operator: eq
+      value: '"temp"'
+    - expression: res.body.loctaionId
+      operator: eq
+      value: '{{locationID}}'
+    - expression: res.body.name
+      operator: eq
+      value: '{{expectedDocumentName}}'
+    - expression: res.body.responsibleRoleId
+      operator: eq
+      value: '{{responsibleRoleID}}'
+    - expression: awid
+      operator: eq
+      value: '{{awid}}'
 
 settings:
   encodeUrl: true
