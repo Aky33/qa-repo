@@ -35,7 +35,7 @@ runtime:
     - expression: res.body.description
       operator: eq
       value: '"temp"'
-    - expression: res.body.loctaionId
+    - expression: res.body.locationId
       operator: eq
       value: '{{locationID}}'
     - expression: res.body.name
@@ -47,8 +47,6 @@ runtime:
     - expression: awid
       operator: eq
       value: '{{awid}}'
-    - type: after-response
-      code: bru.setEnvVar("expectedDocumentId", res.body.oid);
 
 settings:
   encodeUrl: true
