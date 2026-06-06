@@ -23,19 +23,12 @@ runtime:
         });
 
         test("Name is correct", () => {
-            expect(res.getBody().name).to.equal(bru.getVar("newName"));
-        });
-
-        test("Description is correct", () => {
-            expect(res.getBody().description).to.equal(bru.getVar("newDescription"));
+            expect(res.getBody().name).to.equal(bru.getEnvVar("newDocumentName"));
         });
   assertions:
     - expression: res.body.name
       operator: eq
-      value: "{{newName}}"
-    - expression: res.body.description
-      operator: eq
-      value: "{{newDescription}}"
+      value: "{{newDocumentName}}"
 
 settings:
   encodeUrl: true

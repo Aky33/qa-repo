@@ -20,9 +20,8 @@ http:
 
 runtime:
   assertions:
-    - expression: res.body
-      operator: eq
-      value: ""
+    - expression: res.body.uuAppErrorMap
+      operator: isEmpty
 
 settings:
   encodeUrl: true

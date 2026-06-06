@@ -17,7 +17,7 @@ http:
 
 runtime:
   assertions:
-    - expression: res.body.id
+    - expression: res.body.oid
       operator: eq
       value: "{{expectedDocumentId}}"
     - expression: res.body.state

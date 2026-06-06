@@ -28,6 +28,8 @@ runtime:
           mode: "standard",
           force: false
         });
+    - type: after-response
+      code: bru.setEnvVar("expectedDocumentId", res.body.oid)
   assertions:
     - expression: res.body.state
       operator: eq
@@ -47,15 +49,6 @@ runtime:
     - expression: awid
       operator: eq
       value: "{{awid}}"
-  actions:
-    - type: set-variable
-      phase: after-response
-      selector:
-        expression: expectedDocumentId
-        method: jsonq
-      variable:
-        name: res.body.oid
-        scope: runtime
 
 settings:
   encodeUrl: true
