@@ -10,14 +10,22 @@ http:
     type: json
     data: |-
       {
-        "oid": "{{documentOid}}",
+        "oid": "{{expectedDocumentId}}",
         "state": "closed"
       }
   auth: inherit
+
+runtime:
+  assertions:
+    - expression: res.body.id
+      operator: eq
+      value: "{{expectedDocumentId}}"
+    - expression: res.body.state
+      operator: eq
+      value: '"closed"'
 
 settings:
   encodeUrl: true
   timeout: 0
   followRedirects: true
   maxRedirects: 5
-​

@@ -5,22 +5,27 @@ info:
 
 http:
   method: POST
-  url: "{{baseUrl}}/document/moveToTrashByOid?oid={{documentOid}}"
+  url: "{{baseUrl}}/document/moveToTrashByOid?oid={{expectedDocumentId}}"
   params:
     - name: oid
-      value: "{{documentOid}}"
+      value: "{{expectedDocumentId}}"
       type: query
   body:
     type: json
     data: |-
       {
-        "oid": "{{documentOid}}"
+        "oid": "{{expectedDocumentId}}"
       }
   auth: inherit
+
+runtime:
+  assertions:
+    - expression: res.body.oid
+      operator: eq
+      value: "{{expectedDocumentId}}"
 
 settings:
   encodeUrl: true
   timeout: 0
   followRedirects: true
   maxRedirects: 5
-​
