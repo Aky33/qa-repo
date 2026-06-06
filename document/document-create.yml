@@ -19,8 +19,8 @@ runtime:
           data: {
             name: "Test_" + Date.now(),
             description: "temp",
-            responsibleRoleId: "66b1e85944adaf9a1b854750",
-            locationId: "6996fb4bf54227ea201552f2"
+            responsibleRoleId: bru.getEnvVar("locationID"),
+            locationId: bru.getEnvVar("responsibleRoleID")
           },
           mode: "standard",
           force: false
