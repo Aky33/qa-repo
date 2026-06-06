@@ -8,3 +8,8 @@ variables:
     value: uuapp.plus4u.net
   - name: baseUrl
     value: https://{{gateway}}/uu-managementkit-maing02/{{awid}}
+#variables for create document (now its for Frantisek Varga user)
+  - name: locationID
+    value: 6996fb4bf54227ea201552f2
+  - name: responsibleRoleID
+    value: 66b1e85944adaf9a1b854750
