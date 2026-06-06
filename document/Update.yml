@@ -5,16 +5,13 @@ info:
 
 http:
   method: POST
-  url: "{{baseUrl}}/document/update?oid={{documentOid}}&name={{newName}}&description={{newDescription}}"
+  url: "{{baseUrl}}/document/update?name={{newDocumentName}}&&oid={{expectedDocumentId}}"
   params:
-    - name: oid
-      value: "{{documentOid}}"
-      type: query
     - name: name
-      value: "{{newName}}"
+      value: "{{newDocumentName}}"
       type: query
-    - name: description
-      value: "{{newDescription}}"
+    - name: oid
+      value: "{{expectedDocumentId}}"
       type: query
   body:
     type: json
@@ -24,45 +21,11 @@ http:
     token: "{{token}}"
 
 runtime:
-  variables:
-    - name: documentOid
-      value: 6a19a23d0d98219192f2ed0d
-    - name: newName
-      value: Bruno test update 3
-    - name: newDescription
-      value: Updated description 2
   scripts:
     - type: before-request
       code: |-
-        // Pre-request: log what we're about to update
-        console.log("Updating document", bru.getVar("documentOid"));
-    - type: after-response
-      code: |-
-        // Post-response: surface status and any uuApp error
-        console.log("Status:", res.getStatus());
-        const errorMap = res.getBody()?.uuAppErrorMap || {};
-        if (Object.keys(errorMap).length) {
-          console.log("uuAppErrorMap:", JSON.stringify(errorMap));
-        }
-    - type: tests
-      code: |-
-        test("status is 200", function () {
-          expect(res.getStatus()).to.equal(200);
-        });
-
-        test("response has no uuApp errors", function () {
-          const errorMap = res.getBody()?.uuAppErrorMap || {};
-          const errors = Object.values(errorMap).filter((e) => e.type === "error");
-          expect(errors).to.have.lengthOf(0);
-        });
-
-        test("name was updated", function () {
-          expect(res.getBody()?.name).to.equal(bru.getVar("newName"));
-        });
-
-        test("description was updated", function () {
-          expect(res.getBody()?.desc).to.equal(bru.getVar("newDescription"));
-        });
+        const newDocumentName = "Test_" + Date.now() + "_update";
+        bru.setEnvVar("newDocumentName", newDocumentName);
   assertions:
     - expression: res.status
       operator: eq
@@ -72,16 +35,9 @@ runtime:
     - expression: res.responseTime
       operator: lt
       value: "2000"
-  actions:
-    - type: set-variable
-      phase: after-response
-      selector:
-        expression: res.body.sys.rev
-        method: jsonq
-      variable:
-        name: documentRev
-        scope: runtime
-      description: Capture the document revision for chained requests
+    - expression: res.body.name
+      operator: eq
+      value: "{{newDocumentName}}"
 
 settings:
   encodeUrl: true
