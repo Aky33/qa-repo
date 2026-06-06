@@ -24,9 +24,9 @@ runtime:
             expect(res.getBody().name).to.equal(expectedDocumentName);
         });
   assertions:
-    - expression: ""
+    - expression: res.body.name
       operator: eq
-      value: ""
+      value: expectedDocumentName
 
 settings:
   encodeUrl: true
