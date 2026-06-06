@@ -5,16 +5,16 @@ info:
 
 http:
   method: POST
-  url: "{{baseUrl}}/document/discard?oid={{documentOid}}"
+  url: "{{baseUrl}}/document/discard?oid={{expectedDocumentId}}"
   params:
     - name: oid
-      value: "{{documentOid}}"
+      value: "{{expectedDocumentId}}"
       type: query
   body:
     type: json
     data: |-
       {
-        "oid": "{{documentOid}}"
+        "oid": "{{expectedDocumentId}}"
       }
   auth: inherit
 
@@ -29,4 +29,3 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
-​
