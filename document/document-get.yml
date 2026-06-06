@@ -21,12 +21,12 @@ runtime:
         });
 
         test("Name is correct", () => {
-            expect(res.getBody().name).to.equal(expectedDocumentName);
+            expect(res.getBody().name).to.equal(bru.getVar("expectedDocumentName"));
         });
   assertions:
     - expression: res.body.name
       operator: eq
-      value: expectedDocumentName
+      value: "{{expectedDocumentName}}"
 
 settings:
   encodeUrl: true

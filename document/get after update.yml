@@ -23,19 +23,19 @@ runtime:
         });
 
         test("Name is correct", () => {
-            expect(res.getBody().name).to.equal(newName);
+            expect(res.getBody().name).to.equal(bru.getVar("newName"));
         });
 
         test("Description is correct", () => {
-            expect(res.getBody().name).to.equal(newDescription);
+            expect(res.getBody().description).to.equal(bru.getVar("newDescription"));
         });
   assertions:
     - expression: res.body.name
       operator: eq
-      value: Updated name
+      value: "{{newName}}"
     - expression: res.body.description
       operator: eq
-      value: Updated description
+      value: "{{newDescription}}"
 
 settings:
   encodeUrl: true
