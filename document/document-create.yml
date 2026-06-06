@@ -15,9 +15,12 @@ runtime:
     - type: before-request
       code: |-
         // Build the body dynamically from variables
+        const expectedDocumentName = "Test_" + Date.now();
+        bru.setEnvVar("expectedDocumentName", expectedDocumentName);
+              
         req.setBody({
           data: {
-            name: "Test_" + Date.now(),
+            name: expectedDocumentName,
             description: "temp",
             responsibleRoleId: bru.getEnvVar("responsibleRoleID"),
             locationId: bru.getEnvVar("locationID")
@@ -44,6 +47,8 @@ runtime:
     - expression: awid
       operator: eq
       value: '{{awid}}'
+    - type: after-response
+      code: bru.setEnvVar("expectedDocumentId", res.body.oid);
 
 settings:
   encodeUrl: true

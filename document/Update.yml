@@ -1,0 +1,93 @@
+info:
+  name: Update
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{baseUrl}}/document/update?oid={{documentOid}}&name={{newName}}&description={{newDescription}}"
+  params:
+    - name: oid
+      value: "{{documentOid}}"
+      type: query
+    - name: name
+      value: "{{newName}}"
+      type: query
+    - name: description
+      value: "{{newDescription}}"
+      type: query
+  body:
+    type: json
+    data: ""
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+runtime:
+  variables:
+    - name: documentOid
+      value: 6a19a23d0d98219192f2ed0d
+    - name: newName
+      value: Updated name
+    - name: newDescription
+      value: Updated description
+  scripts:
+    - type: before-request
+      code: |-
+        // Pre-request: log what we're about to update
+        console.log("Updating document", bru.getVar("documentOid"));
+    - type: after-response
+      code: |-
+        // Post-response: surface status and any uuApp error
+        console.log("Status:", res.getStatus());
+        const errorMap = res.getBody()?.uuAppErrorMap || {};
+        if (Object.keys(errorMap).length) {
+          console.log("uuAppErrorMap:", JSON.stringify(errorMap));
+        }
+    - type: tests
+      code: |-
+        test("status is 200", function () {
+          expect(res.getStatus()).to.equal(200);
+        });
+
+        test("response has no uuApp errors", function () {
+          const errorMap = res.getBody()?.uuAppErrorMap || {};
+          const errors = Object.values(errorMap).filter((e) => e.type === "error");
+          expect(errors).to.have.lengthOf(0);
+        });
+
+        test("name was updated", function () {
+          expect(res.getBody()?.name).to.equal(bru.getVar("newName"));
+        });
+
+        test("description was updated", function () {
+          expect(res.getBody()?.desc).to.equal(bru.getVar("newDescription"));
+        });
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.uuAppErrorMap
+      operator: isDefined
+    - expression: res.body.name
+      operator: eq
+      value: "{{newName}}"
+    - expression: res.responseTime
+      operator: lt
+      value: "2000"
+  actions:
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: res.body.sys.rev
+        method: jsonq
+      variable:
+        name: documentRev
+        scope: runtime
+      description: Capture the document revision for chained requests
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
