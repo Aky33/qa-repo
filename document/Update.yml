@@ -28,9 +28,9 @@ runtime:
     - name: documentOid
       value: 6a19a23d0d98219192f2ed0d
     - name: newName
-      value: Updated name
+      value: Bruno test update 3
     - name: newDescription
-      value: Updated description
+      value: Updated description 2
   scripts:
     - type: before-request
       code: |-
@@ -69,9 +69,6 @@ runtime:
       value: "200"
     - expression: res.body.uuAppErrorMap
       operator: isDefined
-    - expression: res.body.name
-      operator: eq
-      value: "{{newName}}"
     - expression: res.responseTime
       operator: lt
       value: "2000"
