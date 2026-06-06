@@ -1,21 +1,21 @@
 info:
   name: get after update
   type: http
-  seq: 3
+  seq: 4
 
 http:
   method: GET
-  url: "{{baseUrl}}/document/get?oid={{documentOid}}"
+  url: "{{baseUrl}}/document/get?oid={{expectedDocumentId}}"
   params:
     - name: oid
-      value: "{{documentOid}}"
+      value: "{{expectedDocumentId}}"
       type: query
   auth: inherit
 
 runtime:
   scripts:
     - type: before-request
-      code: bru.getVar("documentOid"));
+      code: bru.getVar("expectedDocumentId");
     - type: tests
       code: |-
         test("Status is 200", () => {
