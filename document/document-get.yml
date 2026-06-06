@@ -13,6 +13,16 @@ http:
   auth: inherit
 
 runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("Status is 200", () => {
+            expect(res.getStatus()).to.equal(200);
+        });
+
+        test("Name is correct", () => {
+            expect(res.getBody().name).to.equal(expectedDocumentName);
+        });
   assertions:
     - expression: ""
       operator: eq
