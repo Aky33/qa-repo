@@ -33,7 +33,7 @@ runtime:
     - expression: name
       operator: eq
       value: Updated name
-    - expression: newDescription
+    - expression: description
       operator: eq
       value: Updated description
 
