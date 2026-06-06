@@ -1,0 +1,26 @@
+info:
+  name: document/moveToTrashByOid
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{baseUrl}}/document/moveToTrashByOid?oid={{documentOid}}"
+  params:
+    - name: oid
+      value: "{{documentOid}}"
+      type: query
+  body:
+    type: json
+    data: |-
+      {
+        "oid": "{{documentOid}}"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+​

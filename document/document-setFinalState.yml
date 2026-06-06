@@ -1,0 +1,23 @@
+info:
+  name: document/setFinalState
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: "{{baseUrl}}/document/setFinalState"
+  body:
+    type: json
+    data: |-
+      {
+        "oid": "{{documentOid}}",
+        "state": "closed"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+​
