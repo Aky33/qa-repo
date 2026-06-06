@@ -1,0 +1,32 @@
+info:
+  name: document/discard
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{baseUrl}}/document/discard?oid={{documentOid}}"
+  params:
+    - name: oid
+      value: "{{documentOid}}"
+      type: query
+  body:
+    type: json
+    data: |-
+      {
+        "oid": "{{documentOid}}"
+      }
+  auth: inherit
+
+runtime:
+  assertions:
+    - expression: res.body
+      operator: eq
+      value: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+​
