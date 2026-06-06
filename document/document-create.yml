@@ -5,10 +5,10 @@ info:
 
 http:
   method: POST
-  url: '{{baseUrl}}/document/create'
+  url: "{{baseUrl}}/document/create"
   auth:
     type: bearer
-    token: '{{token}}'
+    token: "{{token}}"
 
 runtime:
   scripts:
@@ -37,16 +37,25 @@ runtime:
       value: '"temp"'
     - expression: res.body.locationId
       operator: eq
-      value: '{{locationID}}'
+      value: "{{locationID}}"
     - expression: res.body.name
       operator: eq
-      value: '{{expectedDocumentName}}'
+      value: "{{expectedDocumentName}}"
     - expression: res.body.responsibleRoleId
       operator: eq
-      value: '{{responsibleRoleID}}'
+      value: "{{responsibleRoleID}}"
     - expression: awid
       operator: eq
-      value: '{{awid}}'
+      value: "{{awid}}"
+  actions:
+    - type: set-variable
+      phase: after-response
+      selector:
+        expression: expectedDocumentId
+        method: jsonq
+      variable:
+        name: res.body.oid
+        scope: runtime
 
 settings:
   encodeUrl: true
