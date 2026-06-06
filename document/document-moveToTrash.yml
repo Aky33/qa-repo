@@ -23,6 +23,8 @@ runtime:
     - expression: res.body.oid
       operator: eq
       value: "{{expectedDocumentId}}"
+    - expression: res.body.sys.trashed
+      operator: isTruthy
 
 settings:
   encodeUrl: true
