@@ -1,0 +1,30 @@
+info:
+  name: Create
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: "{{baseUrl}}"
+  body:
+    type: json
+    data: |-
+      {
+        "data": {
+          "name": "Test123",
+          "description": "temp",
+          "responsibleRoleId": "66b1e85944adaf9a1b854750",
+          "locationId": "6996fb4bf54227ea201552f2"
+        },
+        "mode": "standard",
+        "force": false
+      }
+  auth:
+    type: bearer
+    token: "{{token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
