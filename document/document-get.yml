@@ -1,0 +1,25 @@
+info:
+  name: document/get
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{baseUrl}}/document/get?oid=699d5f64760096375f31268f"
+  params:
+    - name: oid
+      value: 699d5f64760096375f31268f
+      type: query
+  auth: inherit
+
+runtime:
+  assertions:
+    - expression: ""
+      operator: eq
+      value: ""
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
